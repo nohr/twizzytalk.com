@@ -60,6 +60,7 @@
 }
 
 .convertButton{
+  transition: 0.9s;
   cursor: pointer;
   margin: 20px;
   width: 208px;
