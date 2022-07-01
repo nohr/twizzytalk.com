@@ -29,7 +29,6 @@
   flex-wrap: nowrap;
   color: white;
   font-size: 24px;
-
 }
 
 .logo{
@@ -41,17 +40,20 @@
 
 .inputFields{
   display: flex;
+  flex-direction: row;
   column-gap: 10%;
 }
 
 .inputFields textarea{
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 800;
+  font-size: 24px;
   background-color: var(--green);
   border: 1px inset var(--darkgreen);
   border-radius: 35px;
   width: 500px;
   height: 220px;
   color: black;
-  font-size: 24px;
   text-align: start;
   padding: 20px;
 }
@@ -59,7 +61,10 @@
   outline:var(--darkgreen) !important;
 }
 
-.convertButton{
+.mobileConvertButton {
+  display: none;
+}
+.convertButton, .mobileConvertButton{
   transition: 0.9s;
   cursor: pointer;
   margin: 20px;
@@ -72,4 +77,52 @@
 .convertButton:hover{
 -webkit-box-shadow: #FFF 0 -1px 4px, #ff0 0 -2px 10px, var(--green) 0 -10px 20px, var(--darkgreen) 0 -18px 40px, 5px 5px 15px 5px rgba(0, 0, 0, 0);
   box-shadow: #FFF 0 -1px 4px, #ff0 0 -2px 10px, var(--green) 0 -10px 20px, var(--darkgreen) 0 -18px 40px, 5px 5px 15px 5px rgba(0, 0, 0, 0);
+}
+
+/* Mobile */
+@media only screen and (max-width: 768px) {
+html {
+    background-image: url('/public/images/BG-mobile.png');
+    background-position: top;
+    background-repeat: no-repeat;
+    background-size: cover;
+    height: 100vh;
+    width: 100%;
+  }
+
+  .App{
+    font-size: 12px;
+    background-image: none;
+    margin-bottom: 300px !important;
+  }
+
+.logo {
+  margin-top: 20px;
+  height: auto;
+  width: 85%;
+}
+    .inputFields {
+      display: flex;
+      flex-direction: column;
+      row-gap: 30px;
+      margin: 0;
+      width: 100%;
+      align-items: center;
+    }
+    .inputFields textarea {
+      background-color: var(--green);
+      border: 1px inset var(--darkgreen);
+      border-radius: 35px;
+      width: 95vw;
+      height: 150px;
+      font-size: 18px;
+      padding: 20px;
+    }
+    .convertButton {
+      display: none !important;
+    }
+    .mobileConvertButton{
+      display: block !important;
+      border: 1px solid rgb(52, 51, 51) !important;
+    }
 }

@@ -27,6 +27,10 @@ function App() {
           placeholder={'Type here first...'}
           onChange={(e) => handleChange(e)}
         ></textarea>
+        <button
+          className='mobileConvertButton'
+          onClick={() => convert()}>
+        </button>
         <textarea
           placeholder={'Click to copy...'}
           onClick={() => {
@@ -40,6 +44,10 @@ function App() {
         className='convertButton'
         onClick={() => convert()}>
       </button>
+      {/* TODO: Add Captions */}
+      <div className='captions'>
+        captions
+      </div>
     </div>
   );
 }
