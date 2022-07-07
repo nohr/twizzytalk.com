@@ -2,13 +2,15 @@
 export const dictionary = {
     and: 'an',
     balenciaga: 'Balencï',
-    before: 'before',
+    before: 'B4',
     brotha: 'brudda',
     brother: 'brudda',
     call: 'call',
     ecstasy: 'X ta C',
     flashy: 'flashey',
     for: '4',
+    fore: '4',
+    four: '4',
     just: 'jus',
     la: 'Ella',
     life: 'lyfë',
@@ -30,5 +32,6 @@ export const dictionary = {
     tried: 'trië',
     true: 'tru',
     twin: ['twizz', 'twizzzz', 'twizzy'],
+    two: '2',
     war: 'WAR'
 }

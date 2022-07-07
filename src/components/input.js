@@ -25,7 +25,6 @@ function Input() {
                     placeholder={'Click to copy...'}
                     onClick={(e) => {
                         navigator.clipboard.writeText(converted || 'Type something first!')
-                        console.log(e.target.value);
                     }}
                     value={converted}
                     readOnly
