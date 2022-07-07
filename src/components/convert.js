@@ -16,7 +16,7 @@ function Convert({ setConverted, value }) {
         deciphered = deciphered.map(word =>
             // Special case: twin
             word.toLowerCase() === 'twin' ?
-                dictionary[word.toLowerCase()][Math.floor(Math.random() * dictionary[word.toLowerCase()].length)]
+                dictionary[word.toLowerCase()][Math.floor(Math.random() * 3)]
                 :// Word isn't twin 
                 dictionary[word.toLowerCase()] ?
                     // The word exists in the dictionary

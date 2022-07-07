@@ -101,13 +101,13 @@ p{
 }
 
 /* Caption */
-
 .captions{
   display: flex;
   flex-flow: column wrap;
   row-gap: 10px;
   width: 100%;
   margin-top: 40px;
+  align-items: center;
 }
 .captions a{
   font-size: 14px;
