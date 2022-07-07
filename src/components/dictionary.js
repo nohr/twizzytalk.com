@@ -9,7 +9,6 @@ export const dictionary = {
     ecstasy: 'X ta C',
     flashy: 'flashey',
     for: '4',
-    died: 'diëd',
     just: 'jus',
     la: 'Ella',
     life: 'lyfë',
