@@ -21,6 +21,7 @@ function Input() {
                 ></textarea>
                 {x.matches ? <Convert setConverted={setConverted} value={value} /> : null}
                 <textarea
+                    style={{ cursor: 'pointer' }}
                     placeholder={'Click to copy...'}
                     onClick={(e) => {
                         navigator.clipboard.writeText(converted || 'Type something first!')
