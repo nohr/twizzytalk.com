@@ -6,6 +6,9 @@ let vowels = [`a`, `e`, `i`, `o`, `u`];
 function Convert({ setConverted, value }) {
 
     function char(word) {
+        if (word.toLowerCase().indexOf("'") !== -1) {
+            return word.replace(/'/g, '');
+        }
         if (word === 'Geek') {
             return 'Geëk';
         } else if (word.charAt(word.length - 3) === 'i') {
@@ -18,8 +21,6 @@ function Convert({ setConverted, value }) {
             return word.replace(/ea/g, 'ëa');
         } else if (word.toLowerCase().indexOf("ck") !== -1) {
             return word.replace(/ck/g, 'k');
-        } else if (word.toLowerCase().indexOf("'") !== -1) {
-            return word.replace(/'/g, '');
         } else if (word.charAt(word.length - 1) === 's') {
             return word.replace(/.$/, 'z');
         } else {
@@ -34,15 +35,18 @@ function Convert({ setConverted, value }) {
         deciphered = deciphered.split(' ');
         // Check each word in entrance
         deciphered = deciphered.map(word =>
-            // Special case: twin
-            word.toLowerCase() === 'twin' ?
-                dictionary[word.toLowerCase()][Math.floor(Math.random() * 3)]
-                :// Word isn't 'twin', check if it's in the dictionary 
-                dictionary[word.toLowerCase()] ?
-                    // The word exists in the dictionary
-                    dictionary[word.toLowerCase()]
-                    :// The word isnt a special case and needs to go thru grammar checks 
-                    char(word)
+            // Special case: don't
+            (word.toLowerCase() === `don't` || word.toLowerCase() === `dont`) ?
+                'dnt'
+                :// Special case: twin
+                word.toLowerCase() === 'twin' ?
+                    dictionary[word.toLowerCase()][Math.floor(Math.random() * 3)]
+                    :// Word isn't 'twin', check if it's in the dictionary 
+                    dictionary[word.toLowerCase()] ?
+                        // The word exists in the dictionary
+                        dictionary[word.toLowerCase()]
+                        :// The word isnt a special case and needs to go thru grammar checks 
+                        char(word)
         ).join(' ');
         setConverted(deciphered);
     }
