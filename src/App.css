@@ -72,13 +72,17 @@ p{
   border: 1px inset var(--darkgreen);
   border-radius: 35px;
   width: 500px;
-  height: 220px;
+  height: 180px;
   color: black;
   text-align: start;
   padding: 20px;
 }
 .inputFields textarea:active{
   outline:var(--darkgreen) !important;
+}
+
+.inputFields textarea::placeholder {
+  color: black;
 }
 
 .mobileConvertButton {
@@ -106,8 +110,9 @@ p{
   flex-flow: column wrap;
   row-gap: 10px;
   width: 100%;
-  margin-top: 40px;
+  margin: 40px 0;
   align-items: center;
+  align-content: center;
 }
 .captions a{
   font-size: 14px;
