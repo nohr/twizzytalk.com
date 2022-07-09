@@ -77,19 +77,19 @@ function Convert({ setConverted, value }) {
 
     // Check for sequence
     function sequence(array) {
-        function hashtag(array) {
-            // TODO: Add hashtags at first or last
-            return array;
-        }
+        // function hashtag(array) {
+        //     // TODO: Add hashtags at first or last
+        //     return array;
+        // }
         for (let i = 0; i < array.length; i++) {
             if (array[0]) {
-                // Add hashtags at first or last
-                array = hashtag(array);
-                // TODO: Capitalize X and Y
-                if (array[i].charAt(0).toUpperCase() === 'X' || array[i].charAt(0).toUpperCase() === 'Y') {
-                    const randIndex = Math.floor(Math.random() * hashGroup.length);
-                    array[i] = word;
-                }
+                // // Add hashtags at first or last
+                // array = hashtag(array);
+                // // TODO: Capitalize X and Y
+                // if (array[i].charAt(0).toUpperCase() === 'X' || array[i].charAt(0).toUpperCase() === 'Y') {
+                //     const randIndex = Math.floor(Math.random() * hashGroup.length);
+                //     array[i] = word;
+                // }
             }
             if (array[1]) {
                 // There is more than 1 word
