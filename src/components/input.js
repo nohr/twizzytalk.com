@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import '../App.css';
 import Convert from './convert';
+import useSound from 'use-sound';
 
 function Input() {
     const [value, setValue] = useState('');
     const [converted, setConverted] = useState('');
+    const [copySFX] = useSound(process.env.PUBLIC_URL + `/assets/copy.mp3`)
 
     function handleChange(e) {
         setValue(e.target.value);
@@ -23,8 +25,9 @@ function Input() {
                 <textarea
                     style={{ cursor: 'pointer' }}
                     placeholder={'Click to copy...'}
-                    onClick={(e) => {
+                    onClick={() => {
                         navigator.clipboard.writeText(converted || 'Type something first!')
+                        copySFX()
                     }}
                     value={converted}
                     readOnly

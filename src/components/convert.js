@@ -59,13 +59,9 @@ function Convert({ setConverted, value }) {
         } else if (word.toLowerCase().indexOf("ck") !== -1) {
             return word.replace(/ck/g, 'k');
         } else {
-            return word;
-        };
-    }
-
-    function spell2(string) {
-        return string.replaceAll(/((?!.*is)\w+)s/gim, `$1z`)
+           return word.replaceAll(/((?!.*is)\w+)s/gim, `$1z`)
             .replaceAll(/([b-df-hj-np-tv-z])e/gi, `$1ë`);
+        };
     }
 
     // Contractions
@@ -93,11 +89,11 @@ function Convert({ setConverted, value }) {
             }
             if (array[1]) {
                 // There is more than 1 word
-                if (array[i - 1] && array[i].toLowerCase() === array[i - 1].toLowerCase()) {
+                if (array[i + 1] && array[i].toLowerCase() === array[i + 1].toLowerCase()) {
                     // Capitalize repeat
-                    array[i - 1] = array[i - 1].charAt(0).toUpperCase() + array[i - 1].slice(1)
                     array[i] = array[i].charAt(0).toUpperCase() + array[i].slice(1)
-                } else if (array[1] && (array[0].toLowerCase() !== array[1].toLowerCase())) {
+                    array[i + 1] = array[i + 1].charAt(0).toUpperCase() + array[i + 1].slice(1)
+                } else if ((array[0].toLowerCase() !== array[1].toLowerCase())) {
                     // Capitalize first word 
                     array[0] = array[0].charAt(0).toUpperCase() + array[0].slice(1)
                 }
@@ -142,8 +138,7 @@ function Convert({ setConverted, value }) {
                         spell(word)
         );
         deciphered = sequence(deciphered);
-        deciphered = spell2(deciphered.join(' '));
-        setConverted(deciphered);
+        setConverted(deciphered.join(' '));
     }
     return <>
         <button
