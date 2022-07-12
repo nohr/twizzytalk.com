@@ -59,12 +59,13 @@ function Convert({ setConverted, value }) {
         } else if (word.toLowerCase().indexOf("ck") !== -1) {
             return word.replace(/ck/g, 'k');
         } else {
-           return word.replaceAll(/((?!.*is)\w+)s/gim, `$1z`)
-            .replaceAll(/([b-df-hj-np-tv-z])e/gi, `$1ë`);
+            return word.replaceAll(/((?!.*is)\w+)s/gim, `$1z`)
+                .replaceAll(/([b-df-hj-np-tv-z])e/gi, `$1ë`)
+            // .replaceAll(/([X])/gi, `X`);
         };
     }
 
-    // Contractions
+    // Check for Contractions
     function contract(string) {
 
         return string.replaceAll(/already know?/gi, 'ard know')
@@ -73,20 +74,18 @@ function Convert({ setConverted, value }) {
 
     // Check for sequence
     function sequence(array) {
-        // function hashtag(array) {
-        //     // TODO: Add hashtags at first or last
-        //     return array;
-        // }
+        if (array[0]) {
+            // There is at least a word so we start by adding hashes
+            (Math.floor(Math.random() * 2) === 0) ? array.push('#') : array.unshift('#');
+            console.log(array);
+            // TODO: Capitalize X and Y
+            // if (array[i].charAt(0).toUpperCase() === 'X' || array[i].charAt(0).toUpperCase() === 'Y') {
+            //     const randIndex = Math.floor(Math.random() * hashGroup.length);
+            //     array[i] = word;
+            // }
+        }
+        // Iterate through array
         for (let i = 0; i < array.length; i++) {
-            if (array[0]) {
-                // // Add hashtags at first or last
-                // array = hashtag(array);
-                // // TODO: Capitalize X and Y
-                // if (array[i].charAt(0).toUpperCase() === 'X' || array[i].charAt(0).toUpperCase() === 'Y') {
-                //     const randIndex = Math.floor(Math.random() * hashGroup.length);
-                //     array[i] = word;
-                // }
-            }
             if (array[1]) {
                 // There is more than 1 word
                 if (array[i + 1] && array[i].toLowerCase() === array[i + 1].toLowerCase()) {
@@ -116,11 +115,11 @@ function Convert({ setConverted, value }) {
         return array;
     }
 
-    // Function to parse 
+    // Function to parse initial string
     function decipher(string) {
         let deciphered = string;
         deciphered = contract(deciphered);
-        // Get each word and put it in an array
+        // Put each word in an array
         deciphered = deciphered.split(' ');
         // Check each word in entrance
         deciphered = deciphered.map(word =>
@@ -137,6 +136,7 @@ function Convert({ setConverted, value }) {
                         :// The word isnt a special case and needs to go thru spelling checks 
                         spell(word)
         );
+        // Check for sequential exceptions
         deciphered = sequence(deciphered);
         setConverted(deciphered.join(' '));
     }
