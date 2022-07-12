@@ -61,7 +61,8 @@ function Convert({ setConverted, value }) {
         } else {
             return word.replaceAll(/((?!.*is)\w+)s/gim, `$1z`)
                 .replaceAll(/([b-df-hj-np-tv-z])e/gi, `$1ë`)
-            // .replaceAll(/([X])/gi, `X`);
+                .replaceAll(/([X])/gi, `X`)
+                .replaceAll(/([Y])/gi, `Y`);
         };
     }
 
@@ -77,12 +78,6 @@ function Convert({ setConverted, value }) {
         if (array[0]) {
             // There is at least a word so we start by adding hashes
             (Math.floor(Math.random() * 2) === 0) ? array.push('#') : array.unshift('#');
-            console.log(array);
-            // TODO: Capitalize X and Y
-            // if (array[i].charAt(0).toUpperCase() === 'X' || array[i].charAt(0).toUpperCase() === 'Y') {
-            //     const randIndex = Math.floor(Math.random() * hashGroup.length);
-            //     array[i] = word;
-            // }
         }
         // Iterate through array
         for (let i = 0; i < array.length; i++) {
