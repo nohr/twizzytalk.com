@@ -48,6 +48,12 @@ function Convert({ setConverted, value }) {
         }
         if (word === 'Geek') {
             return 'Geëk';
+        } else if (dictionary[word.toLowerCase()]) {
+            return dictionary[word.toLowerCase()];
+        } else if (word.toLowerCase() === `don't` || word.toLowerCase() === `dont`) {
+            return 'dnt';
+        } else if (word.toLowerCase() === 'twin') {
+            return dictionary[word.toLowerCase()][Math.floor(Math.random() * 3)];
         } else if (word.charAt(word.length - 3) === 'i') {
             return word.replace(/ing/g, 'in');
         } else if (word.toLowerCase().indexOf("ie") !== -1) {
@@ -59,6 +65,11 @@ function Convert({ setConverted, value }) {
         } else if (word.toLowerCase().indexOf("ck") !== -1) {
             return word.replace(/ck/g, 'k');
         } else {
+            for (let i = 0; i < word.length; i++) {
+                if (word[i] === 'e' && word[i] === word[i + 2]) {
+                    return word.split(word[i]).join('');
+                }
+            }
             return word.replaceAll(/((?!.*is)\w+)s/gim, `$1z`)
                 .replaceAll(/([b-df-hj-np-tv-z])e/gi, `$1ë`)
                 .replaceAll(/([X])/gi, `X`)
@@ -92,11 +103,11 @@ function Convert({ setConverted, value }) {
                     array[0] = array[0].charAt(0).toUpperCase() + array[0].slice(1)
                 }
                 if ((Number.parseInt(array[i]) !== 'NaN') && array[i + 1] && (array[i + 1].toLowerCase() === 'you' || array[i + 1].toLowerCase() === 'u')) {
-                    // Make you, U
+                    // Make you, U because an integer preceeds it
                     array[i + 1] = 'U'
                 }
                 if (array[i].toLowerCase() === 'live' && array[i + 1] && array[i + 1].toLowerCase() === 'high') {
-                    // Change high to hi
+                    // Change high to hi because 'live' preceeds it 
                     array[i + 1] = array[i + 1].split(array[i + 1][2])[0]
                 }
                 if ((array[0] && array[1] && array[2])) {
@@ -114,24 +125,10 @@ function Convert({ setConverted, value }) {
     function decipher(string) {
         let deciphered = string;
         deciphered = contract(deciphered);
-        // Put each word in an array
-        deciphered = deciphered.split(' ');
-        // Check each word in entrance
-        deciphered = deciphered.map(word =>
-            // Special case: don't
-            (word.toLowerCase() === `don't` || word.toLowerCase() === `dont`) ?
-                'dnt'
-                :// Special case: twin
-                word.toLowerCase() === 'twin' ?
-                    dictionary[word.toLowerCase()][Math.floor(Math.random() * 3)]
-                    :// Word isn't 'twin', check if it's in the dictionary 
-                    dictionary[word.toLowerCase()] ?
-                        // The word exists in the dictionary
-                        dictionary[word.toLowerCase()]
-                        :// The word isnt a special case and needs to go thru spelling checks 
-                        spell(word)
-        );
-        // Check for sequential exceptions
+        // Put each word in an array then spell each word
+        deciphered = deciphered.split(' ')
+            .map(word => spell(word));
+        //  Check for sequential exceptions
         deciphered = sequence(deciphered);
         setConverted(deciphered.join(' '));
     }
