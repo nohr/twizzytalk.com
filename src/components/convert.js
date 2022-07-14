@@ -58,7 +58,7 @@ function Convert({ setConverted, copySFX, value, input }) {
             }
         } else if (word.toLowerCase() === `don't` || word.toLowerCase() === `dont`) {
             return 'dnt';
-        } else if (word.charAt(word.length - 3) === 'i') {
+        } else if ((word.charAt(word.length - 3) === 'i') && (word.charAt(word.length - 2) === 'n') && (word.charAt(word.length - 1) === 'g')) {
             return word.replace(/ing/g, 'in');
         } else if (word.toLowerCase().indexOf("ie") !== -1) {
             return word.replace(/ie/g, 'ië');
@@ -75,7 +75,7 @@ function Convert({ setConverted, copySFX, value, input }) {
                 }
             }
             return word.replaceAll(/(((?!.*is)\w+)s)/gim, `$2z`)
-                .replaceAll(/([b-df-hj-np-tv-z])e/gi, `$1ë`)
+                .replaceAll(/(([b-df-hj-np-tv-z])e)/gi, `$2ë`)
                 .replaceAll(/([X])/gi, `X`)
                 .replaceAll(/([Y])/gi, `Y`);
         };
