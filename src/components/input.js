@@ -1,18 +1,20 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import '../App.css';
 import Convert from './convert';
 import useSound from 'use-sound';
 
+export const x = window.matchMedia("(max-width: 786px)");
+
 function Input() {
     const [value, setValue] = useState('');
     const [converted, setConverted] = useState('');
-    const [copySFX] = useSound(process.env.PUBLIC_URL + `/assets/copy.mp3`)
+    const [copySFX] = useSound(process.env.PUBLIC_URL + `/assets/copy.mp3`);
+    const input = useRef(null);
 
     function handleChange(e) {
         setValue(e.target.value);
     }
 
-    var x = window.matchMedia("(max-width: 786px)");
     return (
         <div className='midSection'>
             <p className='directions'>Type, then krank it</p>
@@ -20,9 +22,10 @@ function Input() {
                 <textarea
                     placeholder={'Type here first...'}
                     onChange={(e) => handleChange(e)}
+                    ref={input}
                 ></textarea>
-                {x.matches ? <Convert setConverted={setConverted} value={value} /> : null}
-                <textarea
+                {x.matches ? <Convert setConverted={setConverted} value={value} input={input} copySFX={copySFX} /> : null}
+                {x.matches ? null : <textarea
                     style={{ cursor: 'pointer' }}
                     placeholder={'Click to copy...'}
                     onClick={() => {
@@ -31,7 +34,7 @@ function Input() {
                     }}
                     value={converted}
                     readOnly
-                ></textarea>
+                ></textarea>}
             </div>
             {x.matches ? null : <Convert setConverted={setConverted} value={value} />}
         </div>

@@ -1,5 +1,6 @@
 import React from 'react';
 import '../App.css';
+import { x } from './input';
 
 // Dictionary: Lowercase key is necessary
 const dictionary = {
@@ -9,7 +10,7 @@ const dictionary = {
     brotha: 'brudda',
     brother: 'brudda',
     call: 'call',
-    crank:'krank',
+    crank: 'krank',
     ecstasy: 'X ta C',
     flashy: 'flashey',
     for: '4',
@@ -40,7 +41,7 @@ const dictionary = {
     war: 'WAR'
 };
 
-function Convert({ setConverted, value }) {
+function Convert({ setConverted, copySFX, value, input }) {
 
     // Special spelling cases
     function spell(word) {
@@ -132,11 +133,18 @@ function Convert({ setConverted, value }) {
         //  Check for sequential exceptions
         deciphered = sequence(deciphered);
         setConverted(deciphered.join(' '));
+        // 
+        if (x.matches) {
+            input.current.value = deciphered.join(' ');
+            copySFX();
+        }
     }
     return <>
         <button
             className='mobileConvertButton'
-            onClick={() => decipher(value)}>
+            onClick={() => {
+                decipher(value);
+            }}>
         </button>
         <button
             className='convertButton'
