@@ -51,11 +51,13 @@ function Convert({ setConverted, copySFX, value, input }) {
         if (word === 'Geek') {
             return 'Geëk';
         } else if (dictionary[word.toLowerCase()]) {
-            return dictionary[word.toLowerCase()];
+            if (word.toLowerCase() === 'twin') {
+                return dictionary[word.toLowerCase()][Math.floor(Math.random() * 3)];
+            } else {
+                return dictionary[word.toLowerCase()];
+            }
         } else if (word.toLowerCase() === `don't` || word.toLowerCase() === `dont`) {
             return 'dnt';
-        } else if (word.toLowerCase() === 'twin') {
-            return dictionary[word.toLowerCase()][Math.floor(Math.random() * 3)];
         } else if (word.charAt(word.length - 3) === 'i') {
             return word.replace(/ing/g, 'in');
         } else if (word.toLowerCase().indexOf("ie") !== -1) {
@@ -72,7 +74,7 @@ function Convert({ setConverted, copySFX, value, input }) {
                     return word.split(word[i]).join('');
                 }
             }
-            return word.replaceAll(/((?!.*is)\w+)s/gim, `$1z`)
+            return word.replaceAll(/(((?!.*is)\w+)s)/gim, `$2z`)
                 .replaceAll(/([b-df-hj-np-tv-z])e/gi, `$1ë`)
                 .replaceAll(/([X])/gi, `X`)
                 .replaceAll(/([Y])/gi, `Y`);
@@ -131,19 +133,20 @@ function Convert({ setConverted, copySFX, value, input }) {
         deciphered = deciphered.split(' ')
             .map(word => spell(word));
         //  Check for sequential exceptions
-        deciphered = sequence(deciphered);
-        setConverted(deciphered.join(' '));
-        // 
+        deciphered = sequence(deciphered).join(' ');
         if (x.matches) {
-            input.current.value = deciphered.join(' ');
-            copySFX();
+            input.current.value = deciphered;
+        } else {
+            setConverted(deciphered);
         }
     }
+
     return <>
         <button
             className='mobileConvertButton'
             onClick={() => {
                 decipher(value);
+                copySFX();
             }}>
         </button>
         <button
@@ -154,4 +157,4 @@ function Convert({ setConverted, copySFX, value, input }) {
 }
 
 
-export default Convert
+export default Convert;

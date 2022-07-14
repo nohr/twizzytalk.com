@@ -20,7 +20,7 @@ function Input() {
             <p className='directions'>Type, then krank it</p>
             <div className='inputFields'>
                 <textarea
-                    placeholder={'Type here first...'}
+                    placeholder={x.matches ? 'Type here...' : 'Type here first...'}
                     onChange={(e) => handleChange(e)}
                     ref={input}
                 ></textarea>
