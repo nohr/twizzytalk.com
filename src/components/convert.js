@@ -9,6 +9,7 @@ const dictionary = {
     brotha: 'brudda',
     brother: 'brudda',
     call: 'call',
+    crank:'krank',
     ecstasy: 'X ta C',
     flashy: 'flashey',
     for: '4',
