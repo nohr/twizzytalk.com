@@ -14,13 +14,18 @@
 
 }
 
-.App {
+html{
   background-image: url('/public/images/BG.jpg');
-  background-position: center;
   background-repeat: no-repeat;
   background-size: cover;
+  background-attachment: fixed;
+  background-position: center center;
   height: 100%;
   width: 100%;
+
+}
+
+.App {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -29,7 +34,7 @@
   flex-wrap: nowrap;
   color: white;
   font-size: 24px;
-  overflow-y: scroll;
+  /* overflow-y: scroll; */
 }
 
 p{
@@ -141,19 +146,21 @@ p{
 
 /* Mobile */
 @media only screen and (max-width: 768px) {
-html {
+body {
     background-image: url('/public/images/BG-mobile.png');
     background-position: top;
     background-repeat: no-repeat;
     background-size: cover;
-    height: 100vh;
+    -webkit-background-size: cover;
+    background-attachment: scroll;
+    height: 100%;
     width: 100%;
   }
 
   .App{
     font-size: 14px;
     background-image: none;
-    margin-bottom: 300px !important;
+    /* margin-bottom: 300px !important; */
     padding: 10px !important;
   }
 
@@ -189,6 +196,6 @@ html {
     .captions{
       row-gap: 30px;
       align-items: center;
-      margin-bottom: 60px;
+      /* margin-bottom: 60px; */
     }
 }
