@@ -190,12 +190,18 @@ body {
       display: none !important;
     }
     .mobileConvertButton{
+      transform: scale(0.8,0.8);
       display: block !important;
       border: 1px solid rgb(52, 51, 51) !important;
     }
     .captions{
+      position: absolute;
+      bottom: 40px;
       row-gap: 30px;
+      flex-direction: row;
+      justify-content: space-around;
       align-items: center;
+      margin: 0 !important;
       /* margin-bottom: 60px; */
     }
 }

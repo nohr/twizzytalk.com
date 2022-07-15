@@ -1,5 +1,6 @@
 import React from 'react';
 import '../App.css';
+import { x } from './input';
 
 // Dictionary: Lowercase key is necessary
 const dictionary = {
@@ -9,12 +10,13 @@ const dictionary = {
     brotha: 'brudda',
     brother: 'brudda',
     call: 'call',
-    crank:'krank',
+    crank: 'krank',
     ecstasy: 'X ta C',
     flashy: 'flashey',
     for: '4',
     fore: '4',
     four: '4',
+    hows: 'hows',
     just: 'jus',
     la: 'Ella',
     life: 'lyfë',
@@ -37,25 +39,35 @@ const dictionary = {
     true: 'tru',
     twin: ['twizz', 'twizzzz', 'twizzy'],
     two: '2',
-    war: 'WAR'
+    war: 'WAR',
+    whats: 'whats',
+    whens: 'whens',
 };
 
-function Convert({ setConverted, value }) {
+function Convert({ setConverted, copySFX, value, input }) {
+
+    function replace(word) {
+        return word.replaceAll(/(([b-df-hj-np-tv-z])e)/gi, `$2ë`)
+            .replaceAll(/([X])/gi, `X`)
+            .replaceAll(/([Y])/gi, `Y`)
+            .replaceAll(/'/g, '');
+    }
 
     // Special spelling cases
     function spell(word) {
-        if (word.toLowerCase().indexOf("'") !== -1) {
-            return word.replace(/'/g, '');
-        }
-        if (word === 'Geek') {
+        if (word === 'Yeat') {
+            return 'Yeat';
+        } else if (word === 'Geek') {
             return 'Geëk';
         } else if (dictionary[word.toLowerCase()]) {
-            return dictionary[word.toLowerCase()];
+            if (word.toLowerCase() === 'twin') {
+                return dictionary[word.toLowerCase()][Math.floor(Math.random() * 3)];
+            } else {
+                return dictionary[word.toLowerCase()];
+            }
         } else if (word.toLowerCase() === `don't` || word.toLowerCase() === `dont`) {
             return 'dnt';
-        } else if (word.toLowerCase() === 'twin') {
-            return dictionary[word.toLowerCase()][Math.floor(Math.random() * 3)];
-        } else if (word.charAt(word.length - 3) === 'i') {
+        } else if ((word.charAt(word.length - 3) === 'i') && (word.charAt(word.length - 2) === 'n') && (word.charAt(word.length - 1) === 'g')) {
             return word.replace(/ing/g, 'in');
         } else if (word.toLowerCase().indexOf("ie") !== -1) {
             return word.replace(/ie/g, 'ië');
@@ -65,16 +77,23 @@ function Convert({ setConverted, value }) {
             return word.replace(/ea/g, 'ëa');
         } else if (word.toLowerCase().indexOf("ck") !== -1) {
             return word.replace(/ck/g, 'k');
+        } else if (word.toLowerCase().indexOf("oo") !== -1) {
+            return word.replace(/oo/g, 'öo');
         } else {
             for (let i = 0; i < word.length; i++) {
                 if (word[i] === 'e' && word[i] === word[i + 2]) {
                     return word.split(word[i]).join('');
                 }
+
             }
-            return word.replaceAll(/((?!.*is)\w+)s/gim, `$1z`)
-                .replaceAll(/([b-df-hj-np-tv-z])e/gi, `$1ë`)
-                .replaceAll(/([X])/gi, `X`)
-                .replaceAll(/([Y])/gi, `Y`);
+            if (word.charAt(word.length - 1) && (word.charAt(word.length - 1).toLowerCase() === 's')) {
+                if (word.charAt(word.length - 2) && (word.charAt(word.length - 2).toLowerCase() !== 's')) {
+                    word = word.replaceAll(/(((?!.*is)(?!.*os)(?!.*as)(?!.*us)\w+)s)/gim, `$2z`);
+                    word = replace(word);
+                }
+            }
+            // 
+            return replace(word);
         };
     }
 
@@ -130,13 +149,21 @@ function Convert({ setConverted, value }) {
         deciphered = deciphered.split(' ')
             .map(word => spell(word));
         //  Check for sequential exceptions
-        deciphered = sequence(deciphered);
-        setConverted(deciphered.join(' '));
+        deciphered = sequence(deciphered).join(' ');
+        if (x.matches) {
+            input.current.value = deciphered;
+        } else {
+            setConverted(deciphered);
+        }
     }
+
     return <>
         <button
             className='mobileConvertButton'
-            onClick={() => decipher(value)}>
+            onClick={() => {
+                decipher(value);
+                copySFX();
+            }}>
         </button>
         <button
             className='convertButton'
@@ -146,4 +173,4 @@ function Convert({ setConverted, value }) {
 }
 
 
-export default Convert
+export default Convert;
