@@ -77,6 +77,8 @@ function Convert({ setConverted, copySFX, value, input }) {
             return word.replace(/ea/g, 'ëa');
         } else if (word.toLowerCase().indexOf("ck") !== -1) {
             return word.replace(/ck/g, 'k');
+        } else if (word.toLowerCase().indexOf("oo") !== -1) {
+            return word.replace(/oo/g, 'öo');
         } else {
             for (let i = 0; i < word.length; i++) {
                 if (word[i] === 'e' && word[i] === word[i + 2]) {
