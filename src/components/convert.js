@@ -16,6 +16,7 @@ const dictionary = {
     for: '4',
     fore: '4',
     four: '4',
+    hows: 'hows',
     just: 'jus',
     la: 'Ella',
     life: 'lyfë',
@@ -38,17 +39,25 @@ const dictionary = {
     true: 'tru',
     twin: ['twizz', 'twizzzz', 'twizzy'],
     two: '2',
-    war: 'WAR'
+    war: 'WAR',
+    whats: 'whats',
+    whens: 'whens',
 };
 
 function Convert({ setConverted, copySFX, value, input }) {
 
+    function replace(word) {
+        return word.replaceAll(/(([b-df-hj-np-tv-z])e)/gi, `$2ë`)
+            .replaceAll(/([X])/gi, `X`)
+            .replaceAll(/([Y])/gi, `Y`)
+            .replaceAll(/'/g, '');
+    }
+
     // Special spelling cases
     function spell(word) {
-        if (word.toLowerCase().indexOf("'") !== -1) {
-            return word.replace(/'/g, '');
-        }
-        if (word === 'Geek') {
+        if (word === 'Yeat') {
+            return 'Yeat';
+        } else if (word === 'Geek') {
             return 'Geëk';
         } else if (dictionary[word.toLowerCase()]) {
             if (word.toLowerCase() === 'twin') {
@@ -73,11 +82,16 @@ function Convert({ setConverted, copySFX, value, input }) {
                 if (word[i] === 'e' && word[i] === word[i + 2]) {
                     return word.split(word[i]).join('');
                 }
+
             }
-            return word.replaceAll(/(((?!.*is)\w+)s)/gim, `$2z`)
-                .replaceAll(/(([b-df-hj-np-tv-z])e)/gi, `$2ë`)
-                .replaceAll(/([X])/gi, `X`)
-                .replaceAll(/([Y])/gi, `Y`);
+            if (word.charAt(word.length - 1) && (word.charAt(word.length - 1).toLowerCase() === 's')) {
+                if (word.charAt(word.length - 2) && (word.charAt(word.length - 2).toLowerCase() !== 's')) {
+                    word = word.replaceAll(/(((?!.*is)((?!.*os))\w+)s)/gim, `$2z`);
+                    word = replace(word);
+                }
+            }
+            // 
+            return replace(word);
         };
     }
 
