@@ -86,7 +86,7 @@ function Convert({ setConverted, copySFX, value, input }) {
             }
             if (word.charAt(word.length - 1) && (word.charAt(word.length - 1).toLowerCase() === 's')) {
                 if (word.charAt(word.length - 2) && (word.charAt(word.length - 2).toLowerCase() !== 's')) {
-                    word = word.replaceAll(/(((?!.*is)((?!.*os))\w+)s)/gim, `$2z`);
+                    word = word.replaceAll(/(((?!.*is)(?!.*os)(?!.*as)(?!.*us)\w+)s)/gim, `$2z`);
                     word = replace(word);
                 }
             }
