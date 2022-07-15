@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useCallback, useEffect } from 'react';
+import useSound from 'use-sound';
 import '../App.css';
 import { x } from './input';
 
@@ -11,6 +12,8 @@ const dictionary = {
     brother: 'brudda',
     call: 'call',
     crank: 'krank',
+    cranking: 'krankin',
+    cranks: 'kranks',
     ecstasy: 'X ta C',
     flashy: 'flashey',
     for: '4',
@@ -33,6 +36,7 @@ const dictionary = {
     summers: 'summrs',
     that: 'dat',
     the: 'tha',
+    this: 'dis',
     to: '2',
     trendy: 'trëndi',
     tried: 'trië',
@@ -44,17 +48,11 @@ const dictionary = {
     whens: 'whens',
 };
 
-function Convert({ setConverted, copySFX, value, input }) {
+function Convert({ setConverted, setValue, value, input }) {
+    const [bellSFX] = useSound(process.env.PUBLIC_URL + `/assets/copy.mp3`);
 
-    function replace(word) {
-        return word.replaceAll(/(([b-df-hj-np-tv-z])e)/gi, `$2ë`)
-            .replaceAll(/([X])/gi, `X`)
-            .replaceAll(/([Y])/gi, `Y`)
-            .replaceAll(/'/g, '');
-    }
-
-    // Special spelling cases
-    function spell(word) {
+    // Handle special spelling cases
+    const spell = useCallback(word => {
         if (word === 'Yeat') {
             return 'Yeat';
         } else if (word === 'Geek') {
@@ -84,17 +82,69 @@ function Convert({ setConverted, copySFX, value, input }) {
                 if (word[i] === 'e' && word[i] === word[i + 2]) {
                     return word.split(word[i]).join('');
                 }
-
             }
             if (word.charAt(word.length - 1) && (word.charAt(word.length - 1).toLowerCase() === 's')) {
                 if (word.charAt(word.length - 2) && (word.charAt(word.length - 2).toLowerCase() !== 's')) {
-                    word = word.replaceAll(/(((?!.*is)(?!.*os)(?!.*as)(?!.*us)\w+)s)/gim, `$2z`);
+                    word = word.replaceAll(/(((?!.*is)(?!.*as)(?!.*us)\w+)s)/gim, `$2z`);
                     word = replace(word);
                 }
             }
-            // 
             return replace(word);
         };
+    }, [])
+
+    // Function to parse initial string
+    const decipher = useCallback((string) => {
+        //Remove old hashs on rerun
+        if (string[0] === '#') {
+            string[0].replace('#', '')
+        }
+        if (string[string.length - 1] &&
+            (string[string.length - 1] === '#')) {
+            string[string.length - 1].replace('#', '')
+        }
+
+        let deciphered = string;
+        deciphered = contract(deciphered);
+        // Put each word in an array then spell each word
+        deciphered = deciphered.split(' ')
+            .map(word => spell(word));
+        //  Check for sequential exceptions
+        deciphered = sequence(deciphered).join(' ');
+        if (x.matches) {
+            setValue(deciphered);
+        } else {
+            setConverted(deciphered);
+            setValue('');
+        }
+    }, [setConverted, setValue, spell])
+
+    //Key Commands
+    useEffect(() => {
+        function triggerDecipher(e) {
+            e.preventDefault()
+            if (e.key === 'Enter') {
+                value.length >= 0 && decipher(value.trim());
+                input.current.blur();
+                bellSFX();
+            }
+            if (e.key === 'Backspace' && value.length === 0) {
+                decipher('');
+            }
+        }
+        document.addEventListener('keyup', triggerDecipher);
+
+        return () => {
+            document.removeEventListener('keyup', triggerDecipher);
+        }
+    }, [input, value, decipher, bellSFX])
+
+    //Replace lettering
+    function replace(word) {
+        return word.replaceAll(/(([b-df-hj-np-tv-z])e)/gi, `$2ë`)
+            .replaceAll(/([X])/gi, `X`)
+            .replaceAll(/([Y])/gi, `Y`)
+            .replaceAll(/'/g, '');
     }
 
     // Check for Contractions
@@ -112,13 +162,16 @@ function Convert({ setConverted, copySFX, value, input }) {
         }
         // Iterate through array
         for (let i = 0; i < array.length; i++) {
-            if (array[1]) {
+
+            if (array[2]) {
                 // There is more than 1 word
                 if (array[i + 1] && array[i].toLowerCase() === array[i + 1].toLowerCase()) {
+                    // Make first word lowercase
+                    array[0] = array[0].charAt(0).toLowerCase() + array[0].slice(1)
                     // Capitalize repeat
                     array[i] = array[i].charAt(0).toUpperCase() + array[i].slice(1)
                     array[i + 1] = array[i + 1].charAt(0).toUpperCase() + array[i + 1].slice(1)
-                } else if ((array[0].toLowerCase() !== array[1].toLowerCase())) {
+                } else if (array[i + 1] && (array[i].toLowerCase() !== array[i + 1].toLowerCase())) {
                     // Capitalize first word 
                     array[0] = array[0].charAt(0).toUpperCase() + array[0].slice(1)
                 }
@@ -141,33 +194,15 @@ function Convert({ setConverted, copySFX, value, input }) {
         return array;
     }
 
-    // Function to parse initial string
-    function decipher(string) {
-        let deciphered = string;
-        deciphered = contract(deciphered);
-        // Put each word in an array then spell each word
-        deciphered = deciphered.split(' ')
-            .map(word => spell(word));
-        //  Check for sequential exceptions
-        deciphered = sequence(deciphered).join(' ');
-        if (x.matches) {
-            input.current.value = deciphered;
-        } else {
-            setConverted(deciphered);
-        }
-    }
+
 
     return <>
         <button
-            className='mobileConvertButton'
+            className='convertButton'
             onClick={() => {
                 decipher(value);
-                copySFX();
+                bellSFX();
             }}>
-        </button>
-        <button
-            className='convertButton'
-            onClick={() => decipher(value)}>
         </button>
     </>
 }
