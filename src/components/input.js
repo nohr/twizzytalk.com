@@ -31,7 +31,7 @@ function Input() {
                     readOnly
                 ></textarea>}
             </div>
-            <Convert setConverted={setConverted} setValue={setValue} value={value} input={input} />
+            <Convert setConverted={setConverted} converted={converted} setValue={setValue} value={value} input={input} />
         </div>
     )
 }

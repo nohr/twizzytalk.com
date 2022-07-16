@@ -1,5 +1,7 @@
+import { logEvent } from 'firebase/analytics';
 import React, { useCallback, useEffect, useRef } from 'react';
 import useSound from 'use-sound';
+import { analytics } from '..';
 import '../App.css';
 import { x } from './input';
 
@@ -48,7 +50,7 @@ const dictionary = {
     whens: 'whens',
 };
 
-function Convert({ setConverted, setValue, value, input }) {
+function Convert({ setConverted, converted, setValue, value, input }) {
     const [bellSFX] = useSound(process.env.PUBLIC_URL + `/assets/copy.mp3`);
     const btn = useRef(null);
 
@@ -110,6 +112,10 @@ function Convert({ setConverted, setValue, value, input }) {
             setConverted(deciphered);
             setValue('');
         }
+        logEvent(analytics, 'krank it', {
+            input: `${value}`,
+            output: `${converted}`
+        })
     }, [setConverted, setValue, spell])
 
     //Key Commands
