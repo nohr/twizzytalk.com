@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import useSound from 'use-sound';
 import '../App.css';
 import { x } from './input';
@@ -50,6 +50,7 @@ const dictionary = {
 
 function Convert({ setConverted, setValue, value, input }) {
     const [bellSFX] = useSound(process.env.PUBLIC_URL + `/assets/copy.mp3`);
+    const btn = useRef(null);
 
     // Handle special spelling cases
     const spell = useCallback(word => {
@@ -119,6 +120,7 @@ function Convert({ setConverted, setValue, value, input }) {
                 value.length >= 0 && decipher(value.trim());
                 input.current.blur();
                 bellSFX();
+                btn.current.classList.add('buttonHover')
             }
             if (e.key === 'Backspace' && value.length === 0) {
                 decipher('');
@@ -190,6 +192,7 @@ function Convert({ setConverted, setValue, value, input }) {
     return <div className='buttonLayout'>
         <button
             className='convertButton'
+            ref={btn}
             onClick={() => {
                 decipher(value);
                 bellSFX();

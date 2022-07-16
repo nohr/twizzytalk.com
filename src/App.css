@@ -112,6 +112,10 @@ p{
 -webkit-box-shadow: #FFF 0 -1px 4px, #ff0 0 -2px 10px, var(--green) 0 -10px 20px, var(--darkgreen) 0 -18px 40px, 5px 5px 15px 5px rgba(0, 0, 0, 0);
   box-shadow: #FFF 0 -1px 4px, #ff0 0 -2px 10px, var(--green) 0 -10px 20px, var(--darkgreen) 0 -18px 40px, 5px 5px 15px 5px rgba(0, 0, 0, 0);
 }
+.buttonHover {
+  -webkit-box-shadow: #FFF 0 -1px 4px, #ff0 0 -2px 10px, var(--green) 0 -10px 20px, var(--darkgreen) 0 -18px 40px, 5px 5px 15px 5px rgba(0, 0, 0, 0);
+  box-shadow: #FFF 0 -1px 4px, #ff0 0 -2px 10px, var(--green) 0 -10px 20px, var(--darkgreen) 0 -18px 40px, 5px 5px 15px 5px rgba(0, 0, 0, 0);
+}
 .clearButton{
     transition: 0.9s;
     cursor: pointer;
@@ -194,7 +198,7 @@ body {
 .logo {
   margin-top: 20px;
   height: auto;
-  width: 85%;
+  width: 60% !important;
 }
     .inputFields {
       display: flex;
