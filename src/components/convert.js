@@ -95,15 +95,6 @@ function Convert({ setConverted, setValue, value, input }) {
 
     // Function to parse initial string
     const decipher = useCallback((string) => {
-        //Remove old hashs on rerun
-        if (string[0] === '#') {
-            string[0].replace('#', '')
-        }
-        if (string[string.length - 1] &&
-            (string[string.length - 1] === '#')) {
-            string[string.length - 1].replace('#', '')
-        }
-
         let deciphered = string;
         deciphered = contract(deciphered);
         // Put each word in an array then spell each word
@@ -196,7 +187,7 @@ function Convert({ setConverted, setValue, value, input }) {
 
 
 
-    return <>
+    return <div className='buttonLayout'>
         <button
             className='convertButton'
             onClick={() => {
@@ -204,7 +195,12 @@ function Convert({ setConverted, setValue, value, input }) {
                 bellSFX();
             }}>
         </button>
-    </>
+        {x.matches && value.length > 0 &&
+            <button
+                className='clearButton'
+                onClick={() => setValue('')}
+            >Clear</button>}
+    </div>
 }
 
 
