@@ -99,7 +99,8 @@ function Convert({ setConverted, setValue, value, input }) {
         deciphered = contract(deciphered);
         // Put each word in an array then spell each word
         deciphered = deciphered.split(' ')
-            .map(word => spell(word));
+            .map(word => spell(word.replaceAll(/'/g, '')
+                .toLowerCase()));
         //  Check for sequential exceptions
         deciphered = sequence(deciphered).join(' ');
         if (x.matches) {
@@ -134,8 +135,7 @@ function Convert({ setConverted, setValue, value, input }) {
     function replace(word) {
         return word.replaceAll(/(([b-df-hj-np-tv-z])e)/gi, `$2ë`)
             .replaceAll(/([X])/gi, `X`)
-            .replaceAll(/([Y])/gi, `Y`)
-            .replaceAll(/'/g, '');
+            .replaceAll(/([Y])/gi, `Y`);
     }
 
     // Check for Contractions
