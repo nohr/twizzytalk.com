@@ -1,4 +1,4 @@
-import { logEvent } from 'firebase/analytics';
+import { setUserProperties } from 'firebase/analytics';
 import React, { useCallback, useEffect, useRef } from 'react';
 import useSound from 'use-sound';
 import { analytics } from '..';
@@ -112,7 +112,7 @@ function Convert({ setConverted, converted, setValue, value, input }) {
             setConverted(deciphered);
             setValue('');
         }
-        logEvent(analytics, 'krank it', {
+        setUserProperties(analytics, {
             input: `${value}`,
             output: `${converted}`
         })
