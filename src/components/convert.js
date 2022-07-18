@@ -110,7 +110,7 @@ function Convert({ setConverted, converted, setValue, value, input }) {
             setValue(deciphered);
         } else {
             setConverted(deciphered);
-            setValue('');
+            // setValue('');
         }
         setUserProperties(analytics, {
             input: `${value}`,
