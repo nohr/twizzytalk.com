@@ -1,0 +1,110 @@
+---
+import Logo from "/images/LOGO.png";
+import Caption from "../components/caption.astro";
+import Input from "../components/input";
+import { Spa } from "astro-spa";
+import "../styles/globals.css";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link
+      rel="apple-touch-icon"
+      sizes="57x57"
+      href="/images/icon/apple-icon-57x57.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="60x60"
+      href="/images/icon/apple-icon-60x60.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="72x72"
+      href="/images/icon/apple-icon-72x72.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="76x76"
+      href="/images/icon/apple-icon-76x76.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="114x114"
+      href="/images/icon/apple-icon-114x114.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="120x120"
+      href="/images/icon/apple-icon-120x120.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="144x144"
+      href="/images/icon/apple-icon-144x144.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="152x152"
+      href="/images/icon/apple-icon-152x152.png"
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="/images/icon/apple-icon-180x180.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="192x192"
+      href="/images/icon/android-icon-192x192.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href="/images/icon/favicon-32x32.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="96x96"
+      href="/images/icon/favicon-96x96.png"
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href="/images/icon/favicon-16x16.png"
+    />
+    <meta name="msapplication-TileColor" content="#ffffff" />
+    <meta
+      name="msapplication-TileImage"
+      content="/images/icon/ms-icon-144x144.png"
+    />
+    <meta property="og:title" content="TWÏZZY TÄLK" />
+    <meta property="og:image" content="/images/opengraphimg.jpg" />
+    <meta property="og:description" content="Type then kränk it" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://twizzytalk.com/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#EAFF47" />
+    <meta name="description" content="TWÏZZY TÄLK" />
+    <link rel="manifest" href="/manifest.json" />
+    <title>TWÏZZY TÄLK</title>
+  </head>
+  <body
+    class="bg-black bg-[url('/images/BG-mobile.webp')] md:bg-[url('/images/BG.jpg')] bg-no-repeat bg-cover bg-top md:bg-center bg-scroll md:bg-fixed h-full w-full overscroll-contain flex flex-col justify-between items-center md:p-5 flex-nowrap text-white text-sm p-2 pb-16 md:pb-[unset] md:text-lg"
+  >
+    <img
+      alt="Twizzy Talk logo"
+      class="h-auto w-[60%] mt-5 md:mt-[unset] md:w-[60vw] select-none"
+      src={Logo}
+    />
+    <Input client:only="react" />
+    <Caption />
+    <Spa />
+  </body>
+</html>
